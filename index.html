@@ -6,17 +6,10 @@
     <title>Unity WebGL Player | HexaTest</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <style>
-      /* body background change */
-      body{
-        background: #231f20;    
-      }
-    </style>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <!-- <canvas id="unity-canvas" width=1280 height=720></canvas>    for remove fix height width-->  
-      <canvas id="unity-canvas"></canvas>
+      <canvas id="unity-canvas" width=1280 height=720></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -24,11 +17,11 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
-      <!-- <div id="unity-footer">
+      <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">HexaTest</div>   hide footer
-      </div> -->
+        <div id="unity-build-title">HexaTest</div>
+      </div>
     </div>
     <script>
       var container = document.querySelector("#unity-container");
@@ -63,15 +56,15 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/WebGl_Build.loader.js";
+      var loaderUrl = buildUrl + "/build.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WebGl_Build.data.unityweb",
-        frameworkUrl: buildUrl + "/WebGl_Build.framework.js.unityweb",
-        codeUrl: buildUrl + "/WebGl_Build.wasm.unityweb",
+        dataUrl: buildUrl + "/build.data.unityweb",
+        frameworkUrl: buildUrl + "/build.framework.js.unityweb",
+        codeUrl: buildUrl + "/build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "HexaTest",
-        productVersion: "1.0",
+        productVersion: "0.2",
         showBanner: unityShowBanner,
       };
 
@@ -100,10 +93,8 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        // canvas.style.width = "1280px";
-        // canvas.style.height = "720px";  
-        canvas.style.width = "99vw";
-        canvas.style.height = "99vh";  // for screen responsive
+        canvas.style.width = "1280px";
+        canvas.style.height = "720px";
       }
 
       loadingBar.style.display = "block";
@@ -115,7 +106,9 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
-       
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
         }).catch((message) => {
           alert(message);
         });
